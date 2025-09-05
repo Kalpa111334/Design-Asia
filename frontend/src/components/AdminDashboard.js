@@ -285,17 +285,45 @@ const AdminDashboard = () => {
               </div>
               <div>
                 <h1 className="text-xl font-bold text-slate-900">Admin Dashboard</h1>
-                <p className="text-sm text-slate-600">Welcome back, {user.name}</p>
+                <p className="text-sm text-slate-600 flex items-center space-x-2">
+                  <span>Welcome back, {user.name}</span>
+                  {isConnected ? (
+                    <div className="flex items-center space-x-1 text-green-600">
+                      <Wifi className="w-3 h-3" />
+                      <span className="text-xs">Connected</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center space-x-1 text-red-600">
+                      <WifiOff className="w-3 h-3" />
+                      <span className="text-xs">Offline</span>
+                    </div>
+                  )}
+                </p>
               </div>
             </div>
-            <Button 
-              onClick={logout}
-              variant="outline" 
-              className="flex items-center space-x-2 hover:bg-red-50 hover:border-red-200 hover:text-red-600"
-            >
-              <LogOut className="w-4 h-4" />
-              <span>Logout</span>
-            </Button>
+            
+            <div className="flex items-center space-x-3">
+              <NotificationSystem />
+              
+              <Button 
+                onClick={() => setIsChatOpen(true)}
+                variant="outline" 
+                size="sm"
+                className="flex items-center space-x-2"
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span>Team Chat</span>
+              </Button>
+              
+              <Button 
+                onClick={logout}
+                variant="outline" 
+                className="flex items-center space-x-2 hover:bg-red-50 hover:border-red-200 hover:text-red-600"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>Logout</span>
+              </Button>
+            </div>
           </div>
         </div>
       </header>
