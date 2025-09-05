@@ -19,9 +19,20 @@ ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
 # MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+mongo_url = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
+db_name = os.environ.get('DB_NAME', 'task_vision')
+
+# Initialize MongoDB client with error handling
+try:
+    client = AsyncIOMotorClient(mongo_url)
+    db = client[db_name]
+    print(f"✓ Connected to MongoDB at {mongo_url}")
+except Exception as e:
+    print(f"⚠ Warning: MongoDB connection failed: {e}")
+    print("  The server will start but database operations will fail")
+    print("  Make sure MongoDB is running on the specified URL")
+    client = None
+    db = None
 
 # JWT Configuration
 JWT_SECRET = os.environ.get('JWT_SECRET', 'task-vision-secret-key-2025-secure')
@@ -155,6 +166,11 @@ class Notification(BaseModel):
 
 # Global variable to store connected users
 connected_users = {}
+
+# Database connectivity check
+def check_db_connection():
+    if db is None:
+        raise HTTPException(status_code=503, detail="Database not available. Please check MongoDB connection.")
 
 # Utility functions
 async def hash_password(password: str) -> str:
@@ -341,6 +357,8 @@ async def leave_task_room(sid, data):
 # Auth Routes
 @api_router.post("/auth/register", response_model=UserResponse)
 async def register(user_data: UserCreate):
+    check_db_connection()
+    
     # Check if user exists
     existing_user = await db.users.find_one({"email": user_data.email})
     if existing_user:
@@ -372,6 +390,8 @@ async def register(user_data: UserCreate):
 
 @api_router.post("/auth/login", response_model=UserResponse)
 async def login(login_data: UserLogin):
+    check_db_connection()
+    
     # Find user
     user_data = await db.users.find_one({"email": login_data.email})
     if not user_data:
