@@ -209,6 +209,30 @@ const AdminDashboard = () => {
     fetchStats(); // Refresh stats
   };
 
+  const handleDeleteTask = async (taskId) => {
+    if (window.confirm('Are you sure you want to delete this task?')) {
+      try {
+        const response = await fetch(`${API}/tasks/${taskId}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          toast.success('Task deleted successfully');
+          fetchTasks();
+          fetchStats();
+        } else {
+          toast.error('Failed to delete task');
+        }
+      } catch (error) {
+        toast.error('Error deleting task');
+      }
+    }
+  };
+
   const getPriorityColor = (priority) => {
     switch (priority) {
       case 'high': return 'bg-red-100 text-red-800 border-red-200';
