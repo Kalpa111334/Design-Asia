@@ -393,6 +393,9 @@ const AdminDashboard = () => {
                     <div>
                       <p className="text-sm font-medium text-slate-600">Employees</p>
                       <p className="text-2xl font-bold text-purple-600">{stats.total_employees || 0}</p>
+                      <p className="text-xs text-green-600 mt-1">
+                        {stats.online_employees || 0} online
+                      </p>
                     </div>
                     <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
                       <Users className="w-6 h-6 text-purple-600" />
