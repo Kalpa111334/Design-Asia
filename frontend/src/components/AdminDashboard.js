@@ -672,6 +672,19 @@ const AdminDashboard = () => {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Real-time Components */}
+      <RealTimeTaskUpdates 
+        onTaskUpdate={handleRealTimeTaskUpdate}
+        onTaskCreate={handleRealTimeTaskCreate}
+        onTaskDelete={handleRealTimeTaskDelete}
+      />
+      
+      {/* Chat System */}
+      <ChatSystem 
+        isOpen={isChatOpen} 
+        onClose={() => setIsChatOpen(false)} 
+      />
     </div>
   );
 };
