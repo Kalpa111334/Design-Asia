@@ -19,8 +19,16 @@ import {
   Building2,
   Timer,
   Target,
-  TrendingUp
+  TrendingUp,
+  MessageCircle,
+  Bell,
+  Wifi,
+  WifiOff
 } from 'lucide-react';
+import ChatSystem from './ChatSystem';
+import NotificationSystem from './NotificationSystem';
+import RealTimeTaskUpdates from './RealTimeTaskUpdates';
+import { useSocket } from '../hooks/useSocket';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
