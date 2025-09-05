@@ -21,8 +21,18 @@ import {
   Trash2,
   Calendar,
   User,
-  Building2
+  Building2,
+  MessageCircle,
+  Bell,
+  Activity,
+  Wifi,
+  WifiOff
 } from 'lucide-react';
+import ChatSystem from './ChatSystem';
+import NotificationSystem from './NotificationSystem';
+import ActivityFeed from './ActivityFeed';
+import RealTimeTaskUpdates from './RealTimeTaskUpdates';
+import { useSocket } from '../hooks/useSocket';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
