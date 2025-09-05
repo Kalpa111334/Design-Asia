@@ -39,6 +39,7 @@ const API = `${BACKEND_URL}/api`;
 
 const AdminDashboard = () => {
   const { user, logout, token } = useAuth();
+  const { socket, isConnected } = useSocket(token);
   const [activeTab, setActiveTab] = useState('overview');
   const [tasks, setTasks] = useState([]);
   const [employees, setEmployees] = useState([]);
@@ -46,6 +47,7 @@ const AdminDashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const [newTask, setNewTask] = useState({
     title: '',
     description: '',
