@@ -402,40 +402,45 @@ const AdminDashboard = () => {
               </Card>
             </div>
 
-            {/* Recent Tasks */}
-            <Card className="card-shadow">
-              <CardHeader>
-                <CardTitle className="flex items-center justify-between">
-                  Recent Tasks
-                  <Button onClick={() => setActiveTab('tasks')} variant="outline" size="sm">
-                    View All
-                  </Button>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {tasks.slice(0, 5).map((task) => (
-                    <div key={task.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
-                      <div className="flex-1">
-                        <h4 className="font-medium text-slate-900">{task.title}</h4>
-                        <p className="text-sm text-slate-600 truncate">{task.description}</p>
+            {/* Recent Tasks and Activity Feed */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card className="card-shadow">
+                <CardHeader>
+                  <CardTitle className="flex items-center justify-between">
+                    Recent Tasks
+                    <Button onClick={() => setActiveTab('tasks')} variant="outline" size="sm">
+                      View All
+                    </Button>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {tasks.slice(0, 5).map((task) => (
+                      <div key={task.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                        <div className="flex-1">
+                          <h4 className="font-medium text-slate-900">{task.title}</h4>
+                          <p className="text-sm text-slate-600 truncate">{task.description}</p>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Badge className={getPriorityColor(task.priority)}>
+                            {task.priority}
+                          </Badge>
+                          <Badge className={getStatusColor(task.status)}>
+                            {getStatusLabel(task.status)}
+                          </Badge>
+                        </div>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <Badge className={getPriorityColor(task.priority)}>
-                          {task.priority}
-                        </Badge>
-                        <Badge className={getStatusColor(task.status)}>
-                          {getStatusLabel(task.status)}
-                        </Badge>
-                      </div>
-                    </div>
-                  ))}
-                  {tasks.length === 0 && (
-                    <p className="text-center text-slate-500 py-8">No tasks yet. Create your first task!</p>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+                    ))}
+                    {tasks.length === 0 && (
+                      <p className="text-center text-slate-500 py-8">No tasks yet. Create your first task!</p>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Activity Feed */}
+              <ActivityFeed limit={10} />
+            </div>
           </TabsContent>
 
           {/* Tasks Tab */}
