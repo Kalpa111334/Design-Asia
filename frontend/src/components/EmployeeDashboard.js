@@ -35,11 +35,13 @@ const API = `${BACKEND_URL}/api`;
 
 const EmployeeDashboard = () => {
   const { user, logout, token } = useAuth();
+  const { socket, isConnected } = useSocket(token);
   const [activeTab, setActiveTab] = useState('tasks');
   const [tasks, setTasks] = useState([]);
   const [stats, setStats] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [timeTracker, setTimeTracker] = useState({});
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   useEffect(() => {
     fetchData();
